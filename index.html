@@ -1,39 +1,71 @@
-<html>
-  <head>
-
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profil Muhammad Anas Hilmi Yahya</title>
     <style>
-      body{background-color :#FFFFE0;
-           color : #19190;
-           font-family : Arial, sans-serif;
-      .isi{width : 300px;
-           margin: 50px auto;
-           padding : 20px;
-           background-color: white;
-         text-align: center;
-           box-shadow : 0 4px 8px rgba(0,0,0,0.1);
-          }
-      .isi img{
-             width : 150px;
-             border-radius :  50%;
-      }
+        body {
+            background-color: #FFFFE0;
+            color: #191919;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        .isi {
+            width: 300px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: white;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            border-radius: 10px;
+        }
+        .isi img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid #f0f0f0;
+        }
+        h1 {
+            font-size: 1.5em;
+            margin: 15px 0 10px;
+            color: #333;
+        }
+        p {
+            color: #666;
+            margin-bottom: 20px;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
     </style>
-  </head>
-  <body>
-    
-   <div class="isi"> 
-       <img src="WhatsApp_Image_2025-05-31_at_06.19.17-removebg-preview.png" >
-      <h1>Muhammad Anas Hilmi Yahya</h1>
-      <p>Seorang pelajar ingin bisa coding</p>
-     <button id="tombol">ini</button>
-  </div>
+</head>
+<body>
+    <div class="isi">
+        <!-- Mengganti dengan placeholder gambar karena gambar asli tidak tersedia -->
+        <img src="https://via.placeholder.com/150" alt="Foto Profil">
+        <h1>Muhammad Anas Hilmi Yahya</h1>
+        <p>Seorang pelajar ingin bisa coding</p>
+        <button id="tombol">Klik Saya</button>
+    </div>
 
-     <script>
-      const tombol = document.getElementById('tombol');
-       tombol.addEventListener('click',function(){
-                               alert("Halo");
-                               });
+    <script>
+        const tombol = document.getElementById('tombol');
+        tombol.addEventListener('click', function() {
+            alert("Halo! Selamat datang di profil Muhammad Anas Hilmi Yahya");
+        });
     </script>
-    
-  </body>
-  
+</body>
 </html>
