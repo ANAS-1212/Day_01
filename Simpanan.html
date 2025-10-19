@@ -1,1 +1,904 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portal AI Terbaik - Tema Api & Es</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #ff6b35;
+            --secondary-color: #4ecdc4;
+            --accent-color: #ffd166;
+            --background-color: #1a1a2e;
+            --text-color: #ffffff;
+            --transition-speed: 0.5s;
+            --container-padding: 20px;
+            --card-padding: 25px;
+        }
 
+        /* Mode 1: Gradasi Api Es */
+        body.fire-ice-mode {
+            --primary-color: #ff6b35;
+            --secondary-color: #4ecdc4;
+            --accent-color: #ffd166;
+            --background-color: #1a1a2e;
+            --text-color: #ffffff;
+        }
+
+        /* Mode 2: Tema Bulan */
+        body.moon-mode {
+            --primary-color: #f0e6d2;
+            --secondary-color: #c0c0c0;
+            --accent-color: #8b7355;
+            --background-color: #1c1c2e;
+            --text-color: #f5f5f5;
+        }
+
+        /* Mode 3: Tema Es Beku */
+        body.frozen-mode {
+            --primary-color: #87CEEB;
+            --secondary-color: #1E3A8A;
+            --accent-color: #A7C7E7;
+            --background-color: #0F172A;
+            --text-color: #E0F2FE;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--background-color);
+            color: var(--text-color);
+            transition: all var(--transition-speed) ease;
+            min-height: 100vh;
+            padding: var(--container-padding);
+            position: relative;
+            overflow-x: hidden;
+        }
+        
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 25px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            margin-bottom: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            position: relative;
+            z-index: 100;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .nav-left {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            flex: 1;
+            min-width: 250px;
+        }
+
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            text-decoration: none;
+            border-radius: 30px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            cursor: pointer;
+            white-space: nowrap;
+        }
+
+        .back-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 107, 53, 0.4);
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex: 1;
+            justify-content: center;
+        }
+
+        .logo-text {
+            font-size: clamp(1.2rem, 3vw, 1.8rem);
+            font-weight: bold;
+            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 10px rgba(255, 107, 53, 0.3);
+            text-align: center;
+            word-wrap: break-word;
+        }
+
+        .mode-selector {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .mode-btn {
+            padding: clamp(8px, 2vw, 10px) clamp(15px, 3vw, 20px);
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: var(--text-color);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            font-size: clamp(0.8rem, 2vw, 0.9rem);
+            position: relative;
+            overflow: hidden;
+            z-index: 10;
+            white-space: nowrap;
+        }
+
+        .mode-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s ease;
+            z-index: -1;
+        }
+
+        .mode-btn:hover::before {
+            left: 100%;
+        }
+
+        .mode-btn.active {
+            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+            color: white;
+            box-shadow: 0 0 15px rgba(255, 107, 53, 0.5);
+            transform: scale(1.05);
+        }
+
+        .mode-btn:hover:not(.active) {
+            background-color: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        /* Animasi Background */
+        .fire-animation, .ice-animation, .moon-animation, .frozen-animation {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: -1;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity var(--transition-speed) ease;
+        }
+
+        body.fire-ice-mode .fire-animation,
+        body.fire-ice-mode .ice-animation {
+            opacity: 0.4;
+        }
+
+        body.moon-mode .moon-animation {
+            opacity: 0.5;
+        }
+
+        body.frozen-mode .frozen-animation {
+            opacity: 0.6;
+        }
+
+        .fire-particle, .ice-particle, .moon-particle, .frozen-particle {
+            position: absolute;
+            border-radius: 50%;
+        }
+
+        .fire-particle {
+            background: radial-gradient(circle, var(--primary-color), transparent);
+            box-shadow: 0 0 20px var(--primary-color);
+            animation: fireFloat 8s infinite ease-in-out;
+        }
+
+        .ice-particle {
+            background: radial-gradient(circle, var(--secondary-color), transparent);
+            box-shadow: 0 0 20px var(--secondary-color);
+            animation: iceFloat 12s infinite ease-in-out;
+        }
+
+        .moon-particle {
+            background: radial-gradient(circle, var(--primary-color), transparent);
+            box-shadow: 0 0 20px var(--primary-color);
+            animation: moonFloat 15s infinite linear;
+        }
+
+        .frozen-particle {
+            background: radial-gradient(circle, var(--primary-color), transparent);
+            box-shadow: 0 0 25px var(--primary-color);
+            animation: frozenFloat 10s infinite ease-in-out;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+            padding: 0 10px;
+        }
+        
+        
+        
+        h1 {
+            font-size: clamp(2rem, 6vw, 3rem);
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            line-height: 1.2;
+        }
+        
+        .subtitle {
+            font-size: clamp(1rem, 3vw, 1.2rem);
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+        
+        .ai-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr));
+            gap: clamp(15px, 3vw, 25px);
+            margin-top: 40px;
+        }
+        
+        .ai-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: clamp(15px, 3vw, 25px);
+            text-align: center;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .ai-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+        }
+        
+        .ai-logo {
+            width: 100%;
+            height: clamp(200px, 40vw, 400px);
+            margin: 0 auto 20px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            position: relative;
+        }
+        
+        .ai-logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .ai-card:hover .ai-logo img {
+            transform: scale(1.05);
+        }
+        
+        .ai-logo::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, transparent 60%, rgba(0,0,0,0.7) 100%);
+            opacity: 0.7;
+        }
+        
+        .ai-name {
+            font-size: clamp(1.2rem, 3vw, 1.5rem);
+            margin-bottom: 10px;
+            word-wrap: break-word;
+        }
+        
+        .ai-description {
+            font-size: clamp(0.85rem, 2vw, 0.95rem);
+            margin-bottom: 20px;
+            line-height: 1.6;
+            opacity: 0.8;
+            flex-grow: 1;
+        }
+        
+        .ai-features {
+            margin-top: 15px;
+            text-align: left;
+            padding-left: 20px;
+        }
+        
+        .ai-features li {
+            margin-bottom: 8px;
+            font-size: clamp(0.8rem, 2vw, 0.9rem);
+            opacity: 0.8;
+            position: relative;
+        }
+        
+        .ai-features li::before {
+            content: '•';
+            color: var(--primary-color);
+            font-weight: bold;
+            display: inline-block;
+            width: 1em;
+            margin-left: -1em;
+        }
+        
+        .ai-type {
+            display: inline-block;
+            padding: 4px 12px;
+            background: rgba(255, 107, 53, 0.2);
+            border-radius: 20px;
+            font-size: 0.8rem;
+            margin-top: 10px;
+            border: 1px solid rgba(255, 107, 53, 0.3);
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 60px;
+            padding: 20px;
+            font-size: clamp(0.8rem, 2vw, 0.9rem);
+            opacity: 0.7;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+        }
+        
+        /* Touch Device Optimizations */
+        @media (hover: none) {
+            .ai-card:hover {
+                transform: none;
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            }
+            
+            .back-btn:hover, .mode-btn:hover:not(.active) {
+                transform: none;
+            }
+            
+            .ai-card:active {
+                transform: scale(0.98);
+            }
+        }
+        
+        /* Mobile Specific Styles */
+        @media (max-width: 768px) {
+            :root {
+                --container-padding: 15px;
+                --card-padding: 20px;
+            }
+            
+            .navbar {
+                flex-direction: column;
+                gap: 15px;
+                padding: 15px;
+            }
+            
+            .nav-left {
+                flex-direction: column;
+                gap: 15px;
+                width: 100%;
+                text-align: center;
+                min-width: auto;
+            }
+            
+            .logo-container {
+                justify-content: center;
+            }
+            
+            .mode-selector {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .mode-btn {
+                flex: 1;
+                min-width: 100px;
+                justify-content: center;
+            }
+            
+            .ai-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .ai-card {
+                padding: 20px;
+            }
+            
+            .ai-logo {
+                height: 250px;
+            }
+        }
+        
+        /* Small Mobile Devices */
+        @media (max-width: 480px) {
+            :root {
+                --container-padding: 10px;
+            }
+            
+            body {
+                padding: 10px;
+            }
+            
+            .navbar {
+                padding: 12px;
+                border-radius: 12px;
+            }
+            
+            .back-btn {
+                padding: 8px 16px;
+                font-size: 0.9rem;
+            }
+            
+            .mode-btn {
+                padding: 8px 12px;
+                font-size: 0.8rem;
+            }
+            
+            .ai-logo {
+                height: 200px;
+            }
+            
+            .ai-card {
+                padding: 15px;
+            }
+            
+            .header-content {
+                margin-bottom: 30px;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+        }
+        
+        /* Tablet Devices */
+        @media (min-width: 769px) and (max-width: 1024px) {
+            .ai-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .navbar {
+                padding: 20px;
+            }
+        }
+        
+        /* Large Desktop */
+        @media (min-width: 1200px) {
+            .container {
+                max-width: 1400px;
+            }
+            
+            .ai-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        /* Portrait Mode Detection */
+        @media (orientation: portrait) {
+            .ai-logo {
+                height: 35vh;
+                max-height: 300px;
+            }
+        }
+        
+        /* Landscape Mode Detection */
+        @media (orientation: landscape) and (max-height: 600px) {
+            .navbar {
+                padding: 10px 20px;
+                margin-bottom: 20px;
+            }
+            
+            .ai-logo {
+                height: 200px;
+            }
+            
+            .header-content {
+                margin-bottom: 20px;
+            }
+        }
+
+        /* Animations */
+        @keyframes fireFloat {
+            0%, 100% { transform: translateY(0) translateX(0) scale(1); }
+            25% { transform: translateY(-20px) translateX(10px) scale(1.1); }
+            50% { transform: translateY(-40px) translateX(-10px) scale(0.9); }
+            75% { transform: translateY(-20px) translateX(-5px) scale(1.05); }
+        }
+
+        @keyframes iceFloat {
+            0%, 100% { transform: translateY(0) translateX(0) rotate(0deg); }
+            25% { transform: translateY(-30px) translateX(15px) rotate(90deg); }
+            50% { transform: translateY(-60px) translateX(-15px) rotate(180deg); }
+            75% { transform: translateY(-30px) translateX(5px) rotate(270deg); }
+        }
+
+        @keyframes moonFloat {
+            0% { transform: translateY(0) translateX(0) rotate(0deg); }
+            100% { transform: translateY(-1000px) translateX(200px) rotate(360deg); }
+        }
+
+        @keyframes frozenFloat {
+            0%, 100% { 
+                transform: translateY(0) translateX(0) scale(1); 
+                opacity: 0.8; 
+            }
+            25% { 
+                transform: translateY(-25px) translateX(15px) scale(1.2); 
+                opacity: 1; 
+            }
+            50% { 
+                transform: translateY(-50px) translateX(-15px) scale(0.8); 
+                opacity: 0.6; 
+            }
+            75% { 
+                transform: translateY(-25px) translateX(10px) scale(1.1); 
+                opacity: 0.9; 
+            }
+        }
+        
+        /* Performance optimizations for mobile */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+    </style>
+</head>
+<body class="fire-ice-mode">
+    <!-- Background Animations -->
+    <div class="fire-animation" id="fire-animation"></div>
+    <div class="ice-animation" id="ice-animation"></div>
+    <div class="moon-animation" id="moon-animation"></div>
+    <div class="frozen-animation" id="frozen-animation"></div>
+    
+    <div class="container">
+        <!-- Header dengan tombol kembali -->
+        <nav class="navbar">
+            <div class="nav-left">
+                <a href="ISI.html" class="back-btn">
+                    <i class="fas fa-arrow-left"></i> Kembali
+                </a>
+                <div class="logo-container">
+                    <span class="logo-text">Penyimpan Memori Kenangan Tugas</span>
+                </div>
+            </div>
+            <div class="mode-selector">
+                <button class="mode-btn active" data-mode="fire-ice">
+                    <i class="fas fa-fire"></i> Api & Es
+                </button>
+                <button class="mode-btn" data-mode="moon">
+                    <i class="fas fa-moon"></i> Bulan
+                </button>
+                <button class="mode-btn" data-mode="frozen">
+                    <i class="fas fa-icicles"></i> Es Dingin
+                </button>
+            </div>
+        </nav>
+        
+       
+        
+        <div class="ai-grid">
+            <!-- Baris Pertama (3 AI) -->
+            <div class="ai-card deepseek">
+                <div class="ai-logo">
+                    <img src="apies.png" alt="Tugas Pelatihan">
+                </div>
+                <h2 class="ai-name">TUGAS_PELATIHAN.html</h2>
+                <p class="ai-description">Website dengan tema dinamis yang menggabungkan elemen api dan es</p>
+            </div>
+            
+            <div class="ai-card chatgpt">
+                <div class="ai-logo">
+                    <img src="merapi.png" Website Bintang">
+                </div>
+                <h2 class="ai-name">Website_Bintang.html</h2>
+                <p class="ai-description">Tema celestial dengan elemen bintang dan langit malam</p>
+            </div>
+            
+            <div class="ai-card gemini">
+                <div class="ai-logo">
+                    <img src="gugur.png" alt="Website Tema Gugur">
+                </div>
+                <h2 class="ai-name">Website_Tema_Gugur.html</h2>
+                <p class="ai-description">Tema musim gugur dengan nuansa hangat dan natural</p>
+            </div>
+            
+            <!-- Baris Kedua (3 AI) -->
+            <div class="ai-card claude">
+                <div class="ai-logo">
+                    <img src="angin.png" alt="Website Tema Angin">
+                </div>
+                <h2 class="ai-name">Website_Tema_Angin.html</h2>
+                <p class="ai-description">Tema angin dengan animasi yang dinamis dan ringan</p>
+            </div>
+            
+            <div class="ai-card copilot">
+                <div class="ai-logo">
+                    <img src="hujan.png" alt="Website Tema Hujan">
+                </div>
+                <h2 class="ai-name">Website_Tema_Hujan.html</h2>
+                <p class="ai-description">Tema hujan dengan efek tetesan air yang realistis</p>
+            </div>
+            
+            <div class="ai-card midjourney">
+                <div class="ai-logo">
+                    <img src="salju.png" alt="Website Tema Salju">
+                </div>
+                <h2 class="ai-name">Website_Tema_Salju.html</h2>
+                <p class="ai-description">Tema salju dengan efek kristal es dan nuansa dingin</p>
+            </div>
+        </div>
+        
+        <footer>
+            <p>© 2025 Muhammad Anas Hilmi Yahya. Kenangan Website</p>
+            <p style="margin-top: 10px; font-size: 0.8rem;">Optimized for all devices</p>
+        </footer>
+    </div>
+
+    <script>
+        // Deteksi perangkat dan optimisasi
+        function detectDeviceAndOptimize() {
+            const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+            const isTablet = /iPad|Android|Tablet/i.test(navigator.userAgent);
+            const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+            
+            // Optimisasi performa untuk perangkat mobile
+            if (isMobile || isTablet) {
+                // Kurangi jumlah partikel untuk meningkatkan performa
+                window.particleCount = {
+                    fire: 20,
+                    ice: 20,
+                    moon: 30,
+                    frozen: 30
+                };
+                
+                // Nonaktifkan beberapa animasi berat
+                document.body.classList.add('mobile-optimized');
+            } else {
+                // Desktop - full experience
+                window.particleCount = {
+                    fire: 40,
+                    ice: 40,
+                    moon: 50,
+                    frozen: 40
+                };
+            }
+            
+            // Optimisasi untuk perangkat touch
+            if (isTouchDevice) {
+                document.body.classList.add('touch-device');
+            }
+            
+            console.log(`Device detected: Mobile: ${isMobile}, Tablet: ${isTablet}, Touch: ${isTouchDevice}`);
+        }
+
+        // Fungsi untuk mengubah tema
+        function changeTheme(theme) {
+            const body = document.body;
+            const fireAnimation = document.getElementById('fire-animation');
+            const iceAnimation = document.getElementById('ice-animation');
+            const moonAnimation = document.getElementById('moon-animation');
+            const frozenAnimation = document.getElementById('frozen-animation');
+            
+            // Reset semua kelas tema
+            body.className = '';
+            
+            // Hapus semua partikel
+            fireAnimation.innerHTML = '';
+            iceAnimation.innerHTML = '';
+            moonAnimation.innerHTML = '';
+            frozenAnimation.innerHTML = '';
+            
+            // Terapkan tema yang dipilih
+            body.classList.add(`${theme}-mode`);
+            
+            // Buat partikel sesuai tema
+            if (theme === 'fire-ice') {
+                createFireIceParticles();
+            } else if (theme === 'moon') {
+                createMoonParticles();
+            } else if (theme === 'frozen') {
+                createFrozenParticles();
+            }
+            
+            // Update tombol aktif
+            document.querySelectorAll('.mode-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            document.querySelector(`.mode-btn[data-mode="${theme}"]`).classList.add('active');
+            
+            // Simpan preferensi tema
+            localStorage.setItem('preferred-theme', theme);
+        }
+        
+        // Membuat partikel untuk tema Api & Es
+        function createFireIceParticles() {
+            const fireAnimation = document.getElementById('fire-animation');
+            const iceAnimation = document.getElementById('ice-animation');
+            
+            // Buat partikel api
+            for (let i = 0; i < window.particleCount.fire; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('fire-particle');
+                
+                const size = Math.random() * 30 + 10;
+                const left = Math.random() * 100;
+                const top = Math.random() * 100;
+                const animationDuration = Math.random() * 8 + 6;
+                const animationDelay = Math.random() * 5;
+                
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                particle.style.left = `${left}%`;
+                particle.style.top = `${top}%`;
+                particle.style.animationDuration = `${animationDuration}s`;
+                particle.style.animationDelay = `${animationDelay}s`;
+                
+                fireAnimation.appendChild(particle);
+            }
+            
+            // Buat partikel es
+            for (let i = 0; i < window.particleCount.ice; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('ice-particle');
+                
+                const size = Math.random() * 30 + 10;
+                const left = Math.random() * 100;
+                const top = Math.random() * 100;
+                const animationDuration = Math.random() * 12 + 8;
+                const animationDelay = Math.random() * 5;
+                
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                particle.style.left = `${left}%`;
+                particle.style.top = `${top}%`;
+                particle.style.animationDuration = `${animationDuration}s`;
+                particle.style.animationDelay = `${animationDelay}s`;
+                
+                iceAnimation.appendChild(particle);
+            }
+        }
+        
+        // Membuat partikel untuk tema Bulan
+        function createMoonParticles() {
+            const moonAnimation = document.getElementById('moon-animation');
+            
+            // Buat partikel emas pucat (cahaya bulan)
+            for (let i = 0; i < window.particleCount.moon; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('moon-particle');
+                
+                const size = Math.random() * 25 + 5;
+                const left = Math.random() * 100;
+                const top = Math.random() * 100;
+                const animationDuration = Math.random() * 10 + 5;
+                const animationDelay = Math.random() * 5;
+                
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                particle.style.left = `${left}%`;
+                particle.style.top = `${top}%`;
+                particle.style.animationDuration = `${animationDuration}s`;
+                particle.style.animationDelay = `${animationDelay}s`;
+                particle.style.background = 'radial-gradient(circle, #f0e6d2, transparent)';
+                particle.style.boxShadow = '0 0 15px #f0e6d2';
+                
+                moonAnimation.appendChild(particle);
+            }
+        }
+        
+        // Membuat partikel untuk tema Es Beku
+        function createFrozenParticles() {
+            const frozenAnimation = document.getElementById('frozen-animation');
+            
+            // Buat partikel biru muda
+            for (let i = 0; i < window.particleCount.frozen; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('frozen-particle');
+                
+                const size = Math.random() * 25 + 5;
+                const left = Math.random() * 100;
+                const top = Math.random() * 100;
+                const animationDuration = Math.random() * 8 + 6;
+                const animationDelay = Math.random() * 5;
+                
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                particle.style.left = `${left}%`;
+                particle.style.top = `${top}%`;
+                particle.style.animationDuration = `${animationDuration}s`;
+                particle.style.animationDelay = `${animationDelay}s`;
+                particle.style.background = 'radial-gradient(circle, #87ceeb, transparent)';
+                particle.style.boxShadow = '0 0 15px #87ceeb';
+                
+                frozenAnimation.appendChild(particle);
+            }
+        }
+        
+        // Inisialisasi saat halaman dimuat
+        document.addEventListener('DOMContentLoaded', () => {
+            // Deteksi perangkat terlebih dahulu
+            detectDeviceAndOptimize();
+            
+            // Load tema yang disimpan atau gunakan default
+            const savedTheme = localStorage.getItem('preferred-theme') || 'fire-ice';
+            changeTheme(savedTheme);
+            
+            // Tambahkan event listener untuk tombol tema
+            const modeButtons = document.querySelectorAll('.mode-btn');
+            
+            modeButtons.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const theme = this.getAttribute('data-mode');
+                    changeTheme(theme);
+                });
+            });
+            
+            // Optimisasi untuk resize window
+            let resizeTimeout;
+            window.addEventListener('resize', () => {
+                clearTimeout(resizeTimeout);
+                resizeTimeout = setTimeout(() => {
+                    // Re-apply optimizations on resize
+                    detectDeviceAndOptimize();
+                }, 250);
+            });
+        });
+
+        // Handle visibility change untuk optimisasi performa
+        document.addEventListener('visibilitychange', function() {
+            if (document.hidden) {
+                // Reduce animations when tab is not visible
+                document.body.style.animationPlayState = 'paused';
+            } else {
+                document.body.style.animationPlayState = 'running';
+            }
+        });
+    </script>
+</body>
+</html>
