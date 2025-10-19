@@ -2,81 +2,87 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portal AI Terbaik - Tema Api & Es</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Portal AI Terbaik - Tema Dinamis</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        :root {
+            --primary-color: #ff6b35;
+            --secondary-color: #4ecdc4;
+            --accent-color: #ffd166;
+            --background-color: #1a1a2e;
+            --text-color: #ffffff;
+            --transition-speed: 0.5s;
+            --container-padding: 20px;
+            --card-padding: 20px;
+        }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
-        
+
         body {
-            background: linear-gradient(135deg, #1a1a2e, #0a0a1a);
-            color: #fff;
-            min-height: 100vh;
-            padding: 20px;
-            position: relative;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            transition: all var(--transition-speed) ease;
             overflow-x: hidden;
+            min-height: 100vh;
+            position: relative;
+            padding: var(--container-padding);
         }
-        
-        /* Animasi Api dan Es */
-        .fire-animation, .ice-animation {
-            position: fixed;
-            width: 100%;
-            height: 100%;
-            top: 0;
-            left: 0;
-            z-index: -1;
-            pointer-events: none;
+
+        /* Mode 1: Gradasi Api Es */
+        body.fire-ice-mode {
+            --primary-color: #ff6b35;
+            --secondary-color: #4ecdc4;
+            --accent-color: #ffd166;
+            --background-color: #1a1a2e;
+            --text-color: #ffffff;
         }
-        
-        .fire-particle, .ice-particle {
-            position: absolute;
-            border-radius: 50%;
+
+        /* Mode 2: Tema Bulan (Revisi) */
+        body.moon-mode {
+            --primary-color: #f0e6d2;
+            --secondary-color: #c0c0c0;
+            --accent-color: #8b7355;
+            --background-color: #1c1c2e;
+            --text-color: #f5f5f5;
         }
-        
-        .fire-particle {
-            background: radial-gradient(circle, #ff6b35, transparent);
-            box-shadow: 0 0 20px #ff6b35;
-            animation: fireFloat 8s infinite ease-in-out;
+
+        /* Mode 3: Tema Es Dingin */
+        body.frozen-mode {
+            --primary-color: #87CEEB;
+            --secondary-color: #1E3A8A;
+            --accent-color: #A7C7E7;
+            --background-color: #0F172A;
+            --text-color: #E0F2FE;
         }
-        
-        .ice-particle {
-            background: radial-gradient(circle, #4ecdc4, transparent);
-            box-shadow: 0 0 20px #4ecdc4;
-            animation: iceFloat 12s infinite ease-in-out;
-        }
-        
-        @keyframes fireFloat {
-            0%, 100% { transform: translateY(0) translateX(0) scale(1); }
-            25% { transform: translateY(-20px) translateX(10px) scale(1.1); }
-            50% { transform: translateY(-40px) translateX(-10px) scale(0.9); }
-            75% { transform: translateY(-20px) translateX(-5px) scale(1.05); }
-        }
-        
-        @keyframes iceFloat {
-            0%, 100% { transform: translateY(0) translateX(0) rotate(0deg); }
-            25% { transform: translateY(-30px) translateX(15px) rotate(90deg); }
-            50% { transform: translateY(-60px) translateX(-15px) rotate(180deg); }
-            75% { transform: translateY(-30px) translateX(5px) rotate(270deg); }
-        }
-        
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-        
-        /* Header dengan tombol kembali */
-        .header-container {
+
+        /* Navbar */
+        .navbar {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 20px;
+            padding: 15px 25px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            margin-bottom: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            position: relative;
+            z-index: 100;
         }
-        
+
+        .nav-left {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
         .back-btn {
             display: inline-flex;
             align-items: center;
@@ -89,29 +95,198 @@
             font-weight: 600;
             transition: all 0.3s ease;
             border: 1px solid rgba(255, 255, 255, 0.2);
+            cursor: pointer;
+            min-height: 44px; /* Touch-friendly height */
         }
-        
+
         .back-btn:hover {
             background: rgba(255, 255, 255, 0.2);
             transform: translateY(-2px);
             box-shadow: 0 5px 15px rgba(255, 107, 53, 0.4);
         }
-        
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo-text {
+            font-size: 1.8rem;
+            font-weight: bold;
+            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 10px rgba(255, 107, 53, 0.3);
+        }
+
+        .mode-selector {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .mode-btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: var(--text-color);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            font-size: 0.9rem;
+            position: relative;
+            overflow: hidden;
+            z-index: 10;
+            min-height: 44px; /* Touch-friendly height */
+        }
+
+        .mode-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s ease;
+            z-index: -1;
+        }
+
+        .mode-btn:hover::before {
+            left: 100%;
+        }
+
+        .mode-btn.active {
+            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+            color: white;
+            box-shadow: 0 0 15px rgba(255, 107, 53, 0.5);
+            transform: scale(1.05);
+        }
+
+        .mode-btn:hover:not(.active) {
+            background-color: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        /* Search Bar */
+        .search-container {
+            margin: 20px auto;
+            max-width: 600px;
+            position: relative;
+        }
+
+        .search-bar {
+            width: 100%;
+            padding: 15px 50px 15px 20px;
+            border-radius: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text-color);
+            font-size: 1rem;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            min-height: 50px; /* Touch-friendly height */
+        }
+
+        .search-bar:focus {
+            outline: none;
+            box-shadow: 0 0 15px rgba(255, 107, 53, 0.4);
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .search-icon {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-color);
+            opacity: 0.7;
+        }
+
+        /* Animasi Background */
+        .fire-animation, .ice-animation, .moon-animation, .frozen-animation {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: -1;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity var(--transition-speed) ease;
+        }
+
+        body.fire-ice-mode .fire-animation,
+        body.fire-ice-mode .ice-animation {
+            opacity: 0.4;
+        }
+
+        body.moon-mode .moon-animation {
+            opacity: 0.5;
+        }
+
+        body.frozen-mode .frozen-animation {
+            opacity: 0.6;
+        }
+
+        .fire-particle, .ice-particle, .moon-particle, .frozen-particle {
+            position: absolute;
+            border-radius: 50%;
+        }
+
+        .fire-particle {
+            background: radial-gradient(circle, var(--primary-color), transparent);
+            box-shadow: 0 0 20px var(--primary-color);
+            animation: fireFloat 8s infinite ease-in-out;
+        }
+
+        .ice-particle {
+            background: radial-gradient(circle, var(--secondary-color), transparent);
+            box-shadow: 0 0 20px var(--secondary-color);
+            animation: iceFloat 12s infinite ease-in-out;
+        }
+
+        .moon-particle {
+            background: radial-gradient(circle, var(--primary-color), transparent);
+            box-shadow: 0 0 20px var(--primary-color);
+            animation: moonFloat 15s infinite linear;
+        }
+
+        .frozen-particle {
+            background: radial-gradient(circle, var(--primary-color), transparent);
+            box-shadow: 0 0 25px var(--primary-color);
+            animation: frozenFloat 10s infinite ease-in-out;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
         header {
             text-align: center;
             padding: 40px 0;
         }
-        
+
         h1 {
             font-size: 3rem;
             margin-bottom: 10px;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-            background: linear-gradient(to right, #ff6b35, #4ecdc4);
+            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
         }
-        
+
         .subtitle {
             font-size: 1.2rem;
             opacity: 0.9;
@@ -119,18 +294,18 @@
             margin: 0 auto;
             line-height: 1.6;
         }
-        
+
         .ai-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 25px;
             margin-top: 40px;
         }
-        
+
         .ai-card {
             background: rgba(255, 255, 255, 0.1);
             border-radius: 15px;
-            padding: 25px;
+            padding: var(--card-padding);
             text-align: center;
             backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.2);
@@ -138,13 +313,15 @@
             display: flex;
             flex-direction: column;
             height: 100%;
+            position: relative;
+            z-index: 1;
         }
-        
+
         .ai-card:hover {
             transform: translateY(-10px);
             box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
         }
-        
+
         .ai-logo {
             width: 80px;
             height: 80px;
@@ -157,36 +334,64 @@
             font-weight: bold;
             color: white;
         }
-        
+
         .deepseek .ai-logo {
             background: linear-gradient(135deg, #ff6b35, #ff9a3d);
         }
-        
+
         .chatgpt .ai-logo {
             background: linear-gradient(135deg, #4ecdc4, #00b4db);
         }
-        
+
         .gemini .ai-logo {
             background: linear-gradient(135deg, #ff6b35, #4ecdc4);
         }
-        
+
         .claude .ai-logo {
             background: linear-gradient(135deg, #ff9a3d, #ff6b35);
         }
-        
+
         .copilot .ai-logo {
             background: linear-gradient(135deg, #00b4db, #4ecdc4);
         }
-        
+
         .midjourney .ai-logo {
             background: linear-gradient(135deg, #8e2de2, #4ecdc4);
         }
-        
+
+        .dalle .ai-logo {
+            background: linear-gradient(135deg, #00b4db, #8e2de2);
+        }
+
+        .stablediffusion .ai-logo {
+            background: linear-gradient(135deg, #ff6b35, #8e2de2);
+        }
+
+        .perplexity .ai-logo {
+            background: linear-gradient(135deg, #4ecdc4, #00b4db);
+        }
+
+        .huggingface .ai-logo {
+            background: linear-gradient(135deg, #ffd166, #ff9a3d);
+        }
+
+        .leonardo .ai-logo {
+            background: linear-gradient(135deg, #8e2de2, #ff6b35);
+        }
+
+        .suno .ai-logo {
+            background: linear-gradient(135deg, #00b4db, #4ecdc4);
+        }
+
+        .elevenlabs .ai-logo {
+            background: linear-gradient(135deg, #ff9a3d, #ff6b35);
+        }
+
         .ai-name {
             font-size: 1.5rem;
             margin-bottom: 10px;
         }
-        
+
         .ai-description {
             font-size: 0.95rem;
             margin-bottom: 20px;
@@ -194,7 +399,7 @@
             opacity: 0.8;
             flex-grow: 1;
         }
-        
+
         .visit-btn {
             display: inline-block;
             padding: 12px 25px;
@@ -205,14 +410,19 @@
             font-weight: 600;
             transition: all 0.3s ease;
             border: 1px solid rgba(255, 255, 255, 0.2);
+            cursor: pointer;
+            min-height: 44px; /* Touch-friendly height */
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
-        
+
         .visit-btn:hover {
             background: rgba(255, 255, 255, 0.2);
             transform: scale(1.05);
             box-shadow: 0 5px 15px rgba(255, 255, 255, 0.1);
         }
-        
+
         footer {
             text-align: center;
             margin-top: 60px;
@@ -222,44 +432,328 @@
             background: rgba(0, 0, 0, 0.3);
             border-radius: 10px;
         }
-        
+
+        .no-results {
+            text-align: center;
+            padding: 40px;
+            font-size: 1.2rem;
+            opacity: 0.7;
+            grid-column: 1 / -1;
+        }
+
+        /* Animations */
+        @keyframes fireFloat {
+            0%, 100% { transform: translateY(0) translateX(0) scale(1); }
+            25% { transform: translateY(-20px) translateX(10px) scale(1.1); }
+            50% { transform: translateY(-40px) translateX(-10px) scale(0.9); }
+            75% { transform: translateY(-20px) translateX(-5px) scale(1.05); }
+        }
+
+        @keyframes iceFloat {
+            0%, 100% { transform: translateY(0) translateX(0) rotate(0deg); }
+            25% { transform: translateY(-30px) translateX(15px) rotate(90deg); }
+            50% { transform: translateY(-60px) translateX(-15px) rotate(180deg); }
+            75% { transform: translateY(-30px) translateX(5px) rotate(270deg); }
+        }
+
+        @keyframes moonFloat {
+            0% { transform: translateY(0) translateX(0) rotate(0deg); }
+            100% { transform: translateY(-1000px) translateX(200px) rotate(360deg); }
+        }
+
+        @keyframes frozenFloat {
+            0%, 100% { 
+                transform: translateY(0) translateX(0) scale(1); 
+                opacity: 0.8; 
+            }
+            25% { 
+                transform: translateY(-25px) translateX(15px) scale(1.2); 
+                opacity: 1; 
+            }
+            50% { 
+                transform: translateY(-50px) translateX(-15px) scale(0.8); 
+                opacity: 0.6; 
+            }
+            75% { 
+                transform: translateY(-25px) translateX(10px) scale(1.1); 
+                opacity: 0.9; 
+            }
+        }
+
+        /* Responsive Design */
+        /* Tablet */
+        @media (max-width: 1024px) {
+            :root {
+                --container-padding: 15px;
+                --card-padding: 18px;
+            }
+            
+            .ai-grid {
+                grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+                gap: 20px;
+            }
+            
+            h1 {
+                font-size: 2.5rem;
+            }
+            
+            .subtitle {
+                font-size: 1.1rem;
+            }
+        }
+
+        /* Mobile Landscape */
         @media (max-width: 768px) {
-            .header-container {
+            :root {
+                --container-padding: 10px;
+                --card-padding: 15px;
+            }
+            
+            .navbar {
                 flex-direction: column;
                 gap: 15px;
+                padding: 12px 15px;
+            }
+            
+            .nav-left {
+                flex-direction: column;
+                gap: 15px;
+                width: 100%;
                 text-align: center;
+            }
+            
+            .mode-selector {
+                flex-wrap: wrap;
+                justify-content: center;
+                width: 100%;
+            }
+            
+            .mode-btn {
+                padding: 8px 16px;
+                font-size: 0.8rem;
+                flex: 1;
+                min-width: 120px;
+                justify-content: center;
             }
             
             h1 {
                 font-size: 2.2rem;
             }
             
+            .subtitle {
+                font-size: 1rem;
+                padding: 0 10px;
+            }
+            
             .ai-grid {
                 grid-template-columns: 1fr;
+                gap: 15px;
+                margin-top: 30px;
+            }
+            
+            .ai-card {
+                padding: var(--card-padding);
+            }
+            
+            .ai-logo {
+                width: 70px;
+                height: 70px;
+                font-size: 1.8rem;
+            }
+            
+            .ai-name {
+                font-size: 1.3rem;
+            }
+            
+            .ai-description {
+                font-size: 0.9rem;
+            }
+            
+            .search-bar {
+                padding: 12px 45px 12px 15px;
+                min-height: 44px;
+            }
+            
+            header {
+                padding: 30px 0;
+            }
+        }
+
+        /* Mobile Portrait */
+        @media (max-width: 480px) {
+            :root {
+                --container-padding: 8px;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            .subtitle {
+                font-size: 0.9rem;
+            }
+            
+            .logo-text {
+                font-size: 1.5rem;
+            }
+            
+            .back-btn, .mode-btn, .visit-btn {
+                font-size: 0.85rem;
+                padding: 10px 15px;
+            }
+            
+            .ai-grid {
+                gap: 12px;
+            }
+            
+            .ai-card {
+                padding: 15px;
+            }
+            
+            .ai-logo {
+                width: 60px;
+                height: 60px;
+                font-size: 1.5rem;
+                margin-bottom: 10px;
+            }
+            
+            .ai-name {
+                font-size: 1.2rem;
+                margin-bottom: 8px;
+            }
+            
+            .ai-description {
+                font-size: 0.85rem;
+                margin-bottom: 15px;
+            }
+            
+            .search-container {
+                margin: 15px auto;
+            }
+            
+            footer {
+                margin-top: 40px;
+                padding: 15px;
+                font-size: 0.8rem;
+            }
+        }
+
+        /* Very Small Screens */
+        @media (max-width: 360px) {
+            h1 {
+                font-size: 1.6rem;
+            }
+            
+            .subtitle {
+                font-size: 0.85rem;
+            }
+            
+            .logo-text {
+                font-size: 1.3rem;
+            }
+            
+            .ai-card {
+                padding: 12px;
+            }
+            
+            .ai-logo {
+                width: 55px;
+                height: 55px;
+                font-size: 1.3rem;
+            }
+            
+            .ai-name {
+                font-size: 1.1rem;
+            }
+            
+            .ai-description {
+                font-size: 0.8rem;
+            }
+        }
+
+        /* High DPI Screens */
+        @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+            .ai-card {
+                border-width: 0.5px;
+            }
+        }
+
+        /* Print Styles */
+        @media print {
+            .navbar, .search-container, .mode-selector, .back-btn {
+                display: none;
+            }
+            
+            body {
+                background: white;
+                color: black;
+            }
+            
+            .ai-card {
+                background: white;
+                color: black;
+                border: 1px solid #ccc;
+                box-shadow: none;
+            }
+        }
+
+        /* Reduced Motion for Accessibility */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+            
+            .fire-animation, .ice-animation, .moon-animation, .frozen-animation {
+                display: none;
             }
         }
     </style>
 </head>
-<body>
-    <!-- Animasi Api dan Es -->
-    <div class="fire-animation" id="fire-animation"></div>
-    <div class="ice-animation" id="ice-animation"></div>
-    
-    <div class="container">
-        <!-- Header dengan tombol kembali -->
-        <div class="header-container">
-            <a href="javascript:history.back()" class="back-btn">
+<body class="fire-ice-mode">
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="nav-left">
+            <a href="ISI.html" class="back-btn">
                 <i class="fas fa-arrow-left"></i> Kembali
             </a>
+            <div class="logo-container">
+                <span class="logo-text">Tool AI </span>
+            </div>
         </div>
-        
+        <div class="mode-selector">
+            <button class="mode-btn active" data-mode="fire-ice">
+                <i class="fas fa-fire"></i> Api & Es
+            </button>
+            <button class="mode-btn" data-mode="moon">
+                <i class="fas fa-moon"></i> Bulan
+            </button>
+            <button class="mode-btn" data-mode="frozen">
+                <i class="fas fa-snowflake"></i> Es Dingin
+            </button>
+        </div>
+    </nav>
+    
+    <!-- Background Animations -->
+    <div class="fire-animation" id="fire-animation"></div>
+    <div class="ice-animation" id="ice-animation"></div>
+    <div class="moon-animation" id="moon-animation"></div>
+    <div class="frozen-animation" id="frozen-animation"></div>
+    
+    <div class="container">
         <header>
-            <h1>Portal AI Terbaik</h1>
+            <h1>Tool AI </h1>
             <p class="subtitle">Jelajahi kekuatan kecerdasan buatan dengan berbagai platform AI terkemuka. Temukan asisten AI yang sesuai dengan kebutuhan Anda.</p>
         </header>
         
-        <div class="ai-grid">
-            <!-- Baris Pertama (3 AI) -->
+        <!-- Search Bar -->
+        <div class="search-container">
+            <input type="text" id="search-input" class="search-bar" placeholder="Cari tool AI...">
+            <i class="fas fa-search search-icon"></i>
+        </div>
+        
+        <div class="ai-grid" id="ai-grid">
             <div class="ai-card deepseek">
                 <div class="ai-logo">DS</div>
                 <h2 class="ai-name">DeepSeek</h2>
@@ -281,7 +775,6 @@
                 <a href="https://gemini.google.com" target="_blank" class="visit-btn">Kunjungi Gemini</a>
             </div>
             
-            <!-- Baris Kedua (3 AI) -->
             <div class="ai-card claude">
                 <div class="ai-logo">C</div>
                 <h2 class="ai-name">Claude</h2>
@@ -302,29 +795,110 @@
                 <p class="ai-description">Model AI untuk generasi gambar dari teks dengan hasil yang artistik dan imajinatif untuk berbagai keperluan kreatif.</p>
                 <a href="https://www.midjourney.com" target="_blank" class="visit-btn">Kunjungi Midjourney</a>
             </div>
+            
+            <!-- 6 Website AI Baru -->
+            <div class="ai-card dalle">
+                <div class="ai-logo">D</div>
+                <h2 class="ai-name">DALL-E</h2>
+                <p class="ai-description">Model AI dari OpenAI untuk membuat gambar realistis dan artistik dari deskripsi teks dengan kualitas tinggi.</p>
+                <a href="https://openai.com/dall-e" target="_blank" class="visit-btn">Kunjungi DALL-E</a>
+            </div>
+            
+            <div class="ai-card stablediffusion">
+                <div class="ai-logo">SD</div>
+                <h2 class="ai-name">Stable Diffusion</h2>
+                <p class="ai-description">Model generasi gambar open-source yang dapat dijalankan secara lokal untuk membuat gambar dari teks.</p>
+                <a href="https://stability.ai/stable-diffusion" target="_blank" class="visit-btn">Kunjungi Stable Diffusion</a>
+            </div>
+            
+            <div class="ai-card perplexity">
+                <div class="ai-logo">P</div>
+                <h2 class="ai-name">Perplexity AI</h2>
+                <p class="ai-description">Asisten AI pencarian yang memberikan jawaban langsung dengan kutipan sumber untuk informasi yang akurat.</p>
+                <a href="https://www.perplexity.ai" target="_blank" class="visit-btn">Kunjungi Perplexity</a>
+            </div>
+            
+            <div class="ai-card huggingface">
+                <div class="ai-logo">HF</div>
+                <h2 class="ai-name">Hugging Face</h2>
+                <p class="ai-description">Platform komunitas untuk model AI dengan ribuan model siap pakai untuk berbagai tugas dan aplikasi.</p>
+                <a href="https://huggingface.co" target="_blank" class="visit-btn">Kunjungi Hugging Face</a>
+            </div>
+            
+            <div class="ai-card leonardo">
+                <div class="ai-logo">L</div>
+                <h2 class="ai-name">Leonardo AI</h2>
+                <p class="ai-description">Platform untuk membuat aset visual berkualitas tinggi dengan AI untuk game, aplikasi, dan media digital.</p>
+                <a href="https://leonardo.ai" target="_blank" class="visit-btn">Kunjungi Leonardo AI</a>
+            </div>
+            
+            <div class="ai-card suno">
+                <div class="ai-logo">S</div>
+                <h2 class="ai-name">Suno AI</h2>
+                <p class="ai-description">Platform AI untuk membuat musik dari teks, memungkinkan pembuatan lagu orisinal dengan lirik dan melodi.</p>
+                <a href="https://suno.ai" target="_blank" class="visit-btn">Kunjungi Suno AI</a>
+            </div>
         </div>
         
         <footer>
-            <p>© 2023 Portal AI Chat. Semua merek dagang adalah hak milik pemiliknya masing-masing.</p>
+            <p>© 2025 Tool AI Chat. Made by Muhammad Anas Hilmi Yahya.</p>
         </footer>
     </div>
 
     <script>
-        // Membuat partikel untuk animasi api dan es
-        function createParticles() {
+        // Debugging: Cek apakah script berjalan
+        console.log('Script loaded successfully');
+
+        // Fungsi untuk mengubah tema
+        function changeTheme(theme) {
+            console.log('Changing theme to:', theme);
+            
+            const body = document.body;
             const fireAnimation = document.getElementById('fire-animation');
             const iceAnimation = document.getElementById('ice-animation');
+            const moonAnimation = document.getElementById('moon-animation');
+            const frozenAnimation = document.getElementById('frozen-animation');
             
-            // Hapus partikel yang ada
+            // Reset semua kelas tema
+            body.className = '';
+            
+            // Hapus semua partikel
             fireAnimation.innerHTML = '';
             iceAnimation.innerHTML = '';
+            moonAnimation.innerHTML = '';
+            frozenAnimation.innerHTML = '';
+            
+            // Terapkan tema yang dipilih
+            body.classList.add(`${theme}-mode`);
+            
+            // Buat partikel sesuai tema
+            if (theme === 'fire-ice') {
+                createFireIceParticles();
+            } else if (theme === 'moon') {
+                createMoonParticles();
+            } else if (theme === 'frozen') {
+                createFrozenParticles();
+            }
+            
+            // Update tombol aktif
+            document.querySelectorAll('.mode-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            document.querySelector(`.mode-btn[data-mode="${theme}"]`).classList.add('active');
+            
+            console.log('Theme changed successfully to:', theme);
+        }
+        
+        // Membuat partikel untuk tema Api & Es
+        function createFireIceParticles() {
+            const fireAnimation = document.getElementById('fire-animation');
+            const iceAnimation = document.getElementById('ice-animation');
             
             // Buat partikel api
             for (let i = 0; i < 40; i++) {
                 const particle = document.createElement('div');
                 particle.classList.add('fire-particle');
                 
-                // Properti acak
                 const size = Math.random() * 30 + 10;
                 const left = Math.random() * 100;
                 const top = Math.random() * 100;
@@ -346,7 +920,6 @@
                 const particle = document.createElement('div');
                 particle.classList.add('ice-particle');
                 
-                // Properti acak
                 const size = Math.random() * 30 + 10;
                 const left = Math.random() * 100;
                 const top = Math.random() * 100;
@@ -364,9 +937,190 @@
             }
         }
         
+        // Membuat partikel untuk tema Bulan
+        function createMoonParticles() {
+            const moonAnimation = document.getElementById('moon-animation');
+            
+            // Buat partikel emas pucat (cahaya bulan)
+            for (let i = 0; i < 50; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('moon-particle');
+                
+                const size = Math.random() * 25 + 5;
+                const left = Math.random() * 100;
+                const top = Math.random() * 100;
+                const animationDuration = Math.random() * 10 + 5;
+                const animationDelay = Math.random() * 5;
+                
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                particle.style.left = `${left}%`;
+                particle.style.top = `${top}%`;
+                particle.style.animationDuration = `${animationDuration}s`;
+                particle.style.animationDelay = `${animationDelay}s`;
+                particle.style.background = 'radial-gradient(circle, #f0e6d2, transparent)';
+                particle.style.boxShadow = '0 0 15px #f0e6d2';
+                
+                moonAnimation.appendChild(particle);
+            }
+            
+            // Buat partikel perak (cahaya bintang)
+            for (let i = 0; i < 30; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('moon-particle');
+                
+                const size = Math.random() * 20 + 5;
+                const left = Math.random() * 100;
+                const top = Math.random() * 100;
+                const animationDuration = Math.random() * 15 + 10;
+                const animationDelay = Math.random() * 5;
+                
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                particle.style.left = `${left}%`;
+                particle.style.top = `${top}%`;
+                particle.style.animationDuration = `${animationDuration}s`;
+                particle.style.animationDelay = `${animationDelay}s`;
+                particle.style.background = 'radial-gradient(circle, #c0c0c0, transparent)';
+                particle.style.boxShadow = '0 0 15px #c0c0c0';
+                
+                moonAnimation.appendChild(particle);
+            }
+        }
+        
+        // Membuat partikel untuk tema Es Dingin
+        function createFrozenParticles() {
+            const frozenAnimation = document.getElementById('frozen-animation');
+            
+            // Buat partikel biru muda
+            for (let i = 0; i < 40; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('frozen-particle');
+                
+                const size = Math.random() * 25 + 5;
+                const left = Math.random() * 100;
+                const top = Math.random() * 100;
+                const animationDuration = Math.random() * 8 + 6;
+                const animationDelay = Math.random() * 5;
+                
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                particle.style.left = `${left}%`;
+                particle.style.top = `${top}%`;
+                particle.style.animationDuration = `${animationDuration}s`;
+                particle.style.animationDelay = `${animationDelay}s`;
+                particle.style.background = 'radial-gradient(circle, #87ceeb, transparent)';
+                particle.style.boxShadow = '0 0 15px #87ceeb';
+                
+                frozenAnimation.appendChild(particle);
+            }
+            
+            // Buat partikel biru tua
+            for (let i = 0; i < 40; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('frozen-particle');
+                
+                const size = Math.random() * 20 + 5;
+                const left = Math.random() * 100;
+                const top = Math.random() * 100;
+                const animationDuration = Math.random() * 12 + 8;
+                const animationDelay = Math.random() * 5;
+                
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                particle.style.left = `${left}%`;
+                particle.style.top = `${top}%`;
+                particle.style.animationDuration = `${animationDuration}s`;
+                particle.style.animationDelay = `${animationDelay}s`;
+                particle.style.background = 'radial-gradient(circle, #1e3a8a, transparent)';
+                particle.style.boxShadow = '0 0 15px #1e3a8a';
+                
+                frozenAnimation.appendChild(particle);
+            }
+        }
+        
+        // Fungsi untuk pencarian/filter
+        function filterAICards() {
+            const searchTerm = document.getElementById('search-input').value.toLowerCase();
+            const aiCards = document.querySelectorAll('.ai-card');
+            const aiGrid = document.getElementById('ai-grid');
+            let hasResults = false;
+            
+            // Hapus pesan "no results" sebelumnya jika ada
+            const existingNoResults = document.querySelector('.no-results');
+            if (existingNoResults) {
+                existingNoResults.remove();
+            }
+            
+            aiCards.forEach(card => {
+                const aiName = card.querySelector('.ai-name').textContent.toLowerCase();
+                const aiDescription = card.querySelector('.ai-description').textContent.toLowerCase();
+                
+                if (aiName.includes(searchTerm) || aiDescription.includes(searchTerm)) {
+                    card.style.display = 'flex';
+                    hasResults = true;
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+            
+            // Tampilkan pesan jika tidak ada hasil
+            if (!hasResults) {
+                const noResultsMessage = document.createElement('div');
+                noResultsMessage.classList.add('no-results');
+                noResultsMessage.textContent = `Tidak ditemukan tool AI dengan kata kunci "${searchTerm}"`;
+                aiGrid.appendChild(noResultsMessage);
+            }
+        }
+        
         // Inisialisasi partikel saat halaman dimuat
         document.addEventListener('DOMContentLoaded', () => {
-            createParticles();
+            console.log('DOM fully loaded');
+            createFireIceParticles();
+            
+            // Tambahkan event listener untuk tombol tema
+            const modeButtons = document.querySelectorAll('.mode-btn');
+            console.log('Found mode buttons:', modeButtons.length);
+            
+            modeButtons.forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                    console.log('Button clicked:', this.getAttribute('data-mode'));
+                    e.stopPropagation();
+                    const theme = this.getAttribute('data-mode');
+                    changeTheme(theme);
+                });
+                
+                // Tambahkan event untuk keyboard accessibility
+                btn.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        console.log('Button activated via keyboard');
+                        e.preventDefault();
+                        const theme = this.getAttribute('data-mode');
+                        changeTheme(theme);
+                    }
+                });
+            });
+            
+            // Tambahkan event listener untuk pencarian
+            const searchInput = document.getElementById('search-input');
+            if (searchInput) {
+                searchInput.addEventListener('input', filterAICards);
+            }
+            
+            // Test: Coba ubah tema secara manual
+            console.log('Initial theme: fire-ice-mode');
+        });
+
+        // Fallback: Jika ada masalah dengan event listeners
+        window.addEventListener('load', function() {
+            console.log('Window fully loaded');
+            
+            // Pastikan semua button bisa diklik
+            const allButtons = document.querySelectorAll('button, .back-btn, .visit-btn');
+            allButtons.forEach(btn => {
+                btn.style.pointerEvents = 'auto';
+                btn.style.cursor = 'pointer';
+            });
         });
     </script>
 </body>
